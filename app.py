@@ -58,7 +58,9 @@ def send_css(path):
 def send_js(path):
     return send_from_directory('js', path)
 
-
+@app.route('/images/<path:path>')
+def send_images(path):
+    return send_from_directory('images', path)
 
 """
 
