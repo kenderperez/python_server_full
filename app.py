@@ -1,21 +1,27 @@
 from flask import Flask, request
 from flask_pymongo import PyMongo
+from flask_pymongo import pymongo
 from bson import json_util
 from flask import jsonify
 from flask import render_template, send_from_directory
 import os
 ruta = os.getcwd()
 app = Flask(__name__)
+#mongo dbatlasconection
+connection_string = 'mongodb+srv://root:fkFx2e73AkiR3dWU@cluster0-prrjn.mongodb.net/test?retryWrites=true&w=majority'
+client = pymongo.MongoClient(connection_string)
+db = client.get_database('dolar') # aca va el nombre de la base de datos donde dice 'dolar'
+user_collection = pymongo.collection.Collection(db, 'user_collection')
 #app.config['MONGO_URI']='mongodb://localhost/users'
 #mongo = PyMongo(app)
 
 #RUTAS
 """@app.route('/users', methods=['POST'])
 def create_user():
-	#REciviendo datos
+	#Reciviendo datos
 	nombre = request.json['nombre']
 	edad = request.json['edad']
-	if nombre and edad:pi
+	if nombre and edad:
 		mongo.db.users.insert({
 			'nombre': nombre,
 			'edad': edad
@@ -44,6 +50,7 @@ def create_user():
 	texto = request.json['texto']
 	print(texto)
 	print(type(texto))
+	db.historicoToday.insert({ 'texto' : texto })
  
 	#enviamos respuesta de que recibimos los datos del formulario
 	response = jsonify({'mensaje':'datos recividos'})
